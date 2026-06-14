@@ -1,22 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Zongo Dev Mike</title>
+  <title>Zongo Dev Mike - Portfolio</title>
   <style>
     body { 
       background: #0a0a0a; 
       color: #00ff88; 
       font-family: Arial; 
       text-align: center; 
-      padding: 50px; 
+      padding: 30px; 
     }
-    h1 { font-size: 48px; }
-    p { font-size: 20px; }
+    h1 { font-size: 40px; margin: 10px; }
     .box { 
       border: 2px solid #00ff88; 
       padding: 30px; 
       border-radius: 15px; 
-      display: inline-block;
+      max-width: 500px; 
+      margin: auto;
+    }
+    .btn { 
+      display: inline-block; 
+      padding: 12px 25px; 
+      background: #00ff88; 
+      color: #0a0a0a; 
+      text-decoration: none; 
+      border-radius: 8px; 
+      font-weight: bold; 
+      margin-top: 15px;
+    }
+    .projects { margin-top: 30px; text-align: left; }
+    .project { 
+      border-left: 3px solid #00ff88; 
+      padding-left: 15px; 
+      margin: 15px 0; 
     }
   </style>
 </head>
@@ -25,6 +41,21 @@
     <h1>🔥 Zongo Dev Mike</h1>
     <p>First website built from Termux on Android</p>
     <p>Accra, Ghana → Internet 🌍</p>
+    
+    <div class="projects">
+      <h3>Projects Coming Soon:</h3>
+      <div class="project">
+        <b>1. Zongo Tech Blog</b> - Stories from Accra devs
+      </div>
+      <div class="project">
+        <b>2. Mobile Tools</b> - Apps built with Termux
+      </div>
+      <div class="project">
+        <b>3. GitHub Mastery</b> - From 0 to deployed
+      </div>
+    </div>
+    
+    <a href="mailto:mike@zongodev.com" class="btn">Contact Me</a>
   </div>
 </body>
 </html>
