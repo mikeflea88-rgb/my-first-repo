@@ -2,34 +2,48 @@ import socket
 import sys
 from datetime import datetime
 
-print("=" * 50)
-print("             LIGHTWEIGHT PORT SCANNER            ")
-print("=" * 50)
+# Define the target (You can use an IP address or domain name)
+# We use localhost (127.0.0.1) as a safe default to test your own machine
+TARGET = "127.0.0.1"
 
-# Target input
-target_input = input("Enter target IP or Domain (e.g., 192.168.1.1): ")
+print("-" * 50)
+print(f"[+] Scanning Target: {TARGET}")
+print(f"[+] Scan Started at: {str(datetime.now())}")
+print("-" * 50)
+
+# A list of standard common ports to check:
+# 21: FTP, 22: SSH, 23: Telnet, 25: SMTP, 80: HTTP, 443: HTTPS
+common_ports = [21, 22, 23, 25, 80, 110, 143, 443, 3306, 8080]
 
 try:
-    target_ip = socket.gethostbyname(target_input)
-except socket.gaierror:
-    print("\n[-] Error: Could not resolve hostname. Exiting.")
+    for port in common_ports:
+        # AF_INET = IPv4, SOCK_STREAM = TCP
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        
+        # Set a 1-second timeout so it doesn't hang forever on closed ports
+        s.settimeout(1.0)
+        
+        # connect_ex returns an error indicator instead of throwing an exception
+        result = s.connect_ex((TARGET, port))
+        
+        if result == 0:
+            print(f"[!] Port {port:5}: OPEN")
+        else:
+            print(f"[-] Port {port:5}: Closed")
+            
+        s.close()
+
+except KeyboardInterrupt:
+    print("\n[-] Exiting script (Ctrl+C detected).")
     sys.exit()
 
-print(f"\n[+] Scanning Target: {target_ip}")
-print(f"[+] Scan started at: {str(datetime.now())}\n" + "-" * 50)
+except socket.gaierror:
+    print("\n[-] Hostname could not be resolved.")
+    sys.exit()
 
-# Common penetration testing ports to scan quickly
-common_ports = [21, 22, 23, 25, 53, 80, 110, 135, 139, 443, 445, 3306, 3389, 8080]
+except socket.error:
+    print("\n[-] Could not connect to server.")
+    sys.exit()
 
-for port in common_ports:
-    # Setup socket with 1 second timeout so it stays fast
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.settimeout(1.0)
-    
-    # Try connecting to the port
-    result = s.connect_ex((target_ip, port))
-    if result == 0:
-        print(f"[ OPEN ] Port {port:5} is open!")
-    s.close()
-
-print("-" * 50 + "\n[+] Scan finished successfully.")
+print("-" * 50)
+print("[+] Port scan completed successfully.")
